@@ -88,7 +88,7 @@
   _.filter = function(collection, test) {
     let output = [];
     for (var i = 0; i < collection.length; i++) {
-      if (test(collection[i]) === true) {
+      if (test(collection[i])) {
         output.push(collection[i]);
       }
     }
@@ -99,6 +99,11 @@
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+    let output = [];
+    for (var i = 0; i < collection.length; i++) {
+      !test(collection[i]) ? output.push(collection[i]) : null;
+    }
+    return output;
   };
 
   // Produce a duplicate-free version of the array.
