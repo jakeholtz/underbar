@@ -54,11 +54,11 @@
 
   _.filter = function(collection, test) {
     let output = [];
-    for (var i = 0; i < collection.length; i++) {
-      if (test(collection[i])) {
-        output.push(collection[i]);
+    _.each(collection, function(element) {
+      if (test(element)) {
+        output.push(element);
       }
-    }
+    });
     return output;
   };
 
@@ -74,18 +74,18 @@
 
   _.uniq = function(array) {
     var mySet = new Set();
-    for (var i = 0; i < array.length; i++) {
-      mySet.add(array[i]);
-    }
+    _.each(array, function(item) {
+      mySet.add(item);
+    });
     return Array.from(mySet);
   };
 
 
   _.map = function(collection, iterator) {
     var mappedArray = [];
-    for (var i = 0; i < collection.length; i++) {
-      mappedArray[i] = iterator(collection[i]);
-    }
+    _.each(collection, function(element) {
+      mappedArray.push(iterator(element));
+    });
     return mappedArray;
   };
 
