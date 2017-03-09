@@ -226,6 +226,9 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    var output = array.slice(0);
+    output.unshift(output.pop());
+    return output;
   };
 
 
