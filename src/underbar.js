@@ -180,7 +180,13 @@
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
-  _.defaults = function(obj) {
+  _.defaults = function(object) {
+    for (var i = 1; i < arguments.length; i++) {
+      _.each(arguments[i], function(value, prop) {
+        object[prop] === undefined ? object[prop] = value : null;
+      });
+    }
+    return object;
   };
 
 
