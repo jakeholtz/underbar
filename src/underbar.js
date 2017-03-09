@@ -98,14 +98,18 @@
 
 
   _.reduce = function(collection, iterator, accumulator) {
-    if (accumulator !== undefined) {
-      for (var i = 0; i < collection.length; i++) {
+    var i = 0;
+    if (accumulator === undefined) {
+      accumulator = collection[0];
+      i = 1;
+    }
+    if (Array.isArray(collection)) {
+      for (var i; i < collection.length; i++) {
         accumulator = iterator(accumulator, collection[i]);
       }
     } else {
-      accumulator = collection[0]
-      for (var i = 1; i < collection.length; i++) {
-        accumulator = iterator(accumulator, collection[i]);
+      for (var prop in collection) {
+        accumulator = iterator(accumulator, collection[prop]);
       }
     }
     return accumulator;
@@ -126,7 +130,12 @@
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
-    // TIP: Try re-using reduce() here.
+    return _.reduce(collection, function(allPass, item) {
+      if (!allPass) {
+        return false;
+      }
+      return iterator === undefined ? _.identity(item) : Boolean(iterator(item));
+    }, true);
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
