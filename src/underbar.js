@@ -233,21 +233,21 @@
 
   _.memoize = function(func) {
     var result;
-    var alreadyCalled;
-    if (window._[arguments] === undefined) {
+    if (window._[JSON.stringify(arguments)] === undefined) {
       var alreadyCalled = false;
       return function() {
         if (!alreadyCalled) {
           result = func.apply(this, arguments);
           alreadyCalled = true;
-          window._[arguments] = result;
+          window._[JSON.stringify(arguments)] = result;
         }
         return result;
-      };
-    } else if (window._[arguments] !== undefined) {
-      return result;
+      }
+    } else if (window._[JSON.stringify(arguments)] !== undefined) {
+      return window._[JSON.stringify(arguments)];
     }
   };
+
     /*
     expect(add(1, 2)).to.equal(3);
     expect(memoAdd(1, 2)).to.equal(3)
