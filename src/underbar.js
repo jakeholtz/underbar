@@ -232,23 +232,20 @@
 
 
   _.memoize = function(func) {
-    var memoized = {};
     var result;
     var alreadyCalled;
-    for (var i = 0; i < arguments.length; i++) {
-      if (memoized[arguments[i]] === undefined) {
-        var alreadyCalled = false;
-        return function() {
-          if (!alreadyCalled) {
+    if (window._[arguments] === undefined) {
+      var alreadyCalled = false;
+      return function() {
+        if (!alreadyCalled) {
           result = func.apply(this, arguments);
           alreadyCalled = true;
-          memoized[arguments[i]] = result;
-          }
-          return result;
-        };
-      } else if (memoized[arguments[i]] !== undefined) {
+          window._[arguments] = result;
+        }
         return result;
-      }
+      };
+    } else if (window._[arguments] !== undefined) {
+      return result;
     }
   };
     /*
