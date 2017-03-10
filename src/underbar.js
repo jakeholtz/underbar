@@ -231,23 +231,22 @@
   // instead if possible.
 
 
-  _.memoize = function() {
+  _.memoize = function(func) {
     var memoized = {};
     var result;
     var alreadyCalled;
     for (var i = 0; i < arguments.length; i++) {
-      var func = arguments[i];
-      if (memoized[func(arguments)] === undefined) {
+      if (memoized[arguments[i]] === undefined) {
         var alreadyCalled = false;
         return function() {
           if (!alreadyCalled) {
           result = func.apply(this, arguments);
           alreadyCalled = true;
-          memoized[func(arguments)] = result;
+          memoized[arguments[i]] = result;
           }
           return result;
         };
-      } else if (memoized[func(arguments)] !== undefined) {
+      } else if (memoized[arguments[i]] !== undefined) {
         return result;
       }
     }
