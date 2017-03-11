@@ -231,30 +231,21 @@
   // instead if possible.
 
 
-  _.memoize = function(func) {
-    var result;
-    if (window._[JSON.stringify(arguments)] === undefined) {
-      var alreadyCalled = false;
-      return function() {
-        if (!alreadyCalled) {
-          result = func.apply(this, arguments);
-          alreadyCalled = true;
-          window._[JSON.stringify(arguments)] = result;
-        }
-        return result;
-      }
-    } else if (window._[JSON.stringify(arguments)] !== undefined) {
-      return window._[JSON.stringify(arguments)];
-    }
-  };
-
-    /*
-    expect(add(1, 2)).to.equal(3);
-    expect(memoAdd(1, 2)).to.equal(3)
-    expect(memoAdd(1, 2)).to.equal(3);
-    expect(memoAdd(3, 4)).to.equal(7);
-    expect(memoAdd(1, 3)).to.equal(4);
-    */
+_.memoize = function(func) {
+   var result;
+   var cached;
+   if (cached === undefined) {
+     cached = {};
+   }
+   return function() {
+     var args = JSON.stringify(arguments);
+     if (cached[args] === undefined) {
+       result = func.apply(this, arguments);
+       cached[args] = result;
+     }
+     return result;
+   };
+ };
 
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
