@@ -269,6 +269,24 @@ _.memoize = function(func) {
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
+    var result = [];
+    var potentialSharedItems = Array.from(arguments[0])
+    var args = Array.from(arguments);
+    function addSharedToResult() {
+      _.each(potentialSharedItems, function(element) {
+        var counter = 0;
+        _.each(args, function (subArray) {
+          if (_.contains(subArray, element)) {
+            counter++;
+          }
+          if (counter === args.length) {
+            result.push(element);
+          }
+        });
+      });
+    };
+    addSharedToResult();
+    return result;
   };
 
   // Take the difference between one array and a number of other arrays.
