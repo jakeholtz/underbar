@@ -252,6 +252,18 @@ _.memoize = function(func) {
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
+    result = [];
+    var addToResult = function(array) {
+      _.each(array, function(element) {
+        if (Array.isArray(element)) {
+          addToResult(element);
+        } else {
+          result.push(element)
+        }
+      });
+    }
+    addToResult(nestedArray);
+    return result;
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
