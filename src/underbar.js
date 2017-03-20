@@ -234,6 +234,17 @@ _.memoize = function(func) {
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
+    var output = [];
+    var args = Array.from(arguments);
+    var longest = args[0].length;
+    _.each(args, function(array) {
+      for (var i = 0; i < longest; i++) {
+        output[i] = output[i] || [];
+        output[i].push(array[i]);
+        output[i].length === longest;
+      }
+    });
+    return output;
   };
 
   // Takes a multidimensional array and converts it to a one-dimensional array.
